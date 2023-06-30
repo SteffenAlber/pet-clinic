@@ -5,6 +5,7 @@ env:
   # Tip: Die Token/der API-Key werden als Secrets in den Repository-Settings eingetragen und hier referenziert.
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 jobs:
   compile:
     name: Compile
@@ -26,8 +27,8 @@ jobs:
           # hier ist Platz für maven package und docker build
           mvn package
           docker build --tag steffenalber/pet-clinic:latest -f Dockerfile . 
-          
-          
+          docker login -u steffenalber –p $DOCKERHUB_TOKEN
+          docker image push steffenalber/pet-clinic:latest
           
           
           
